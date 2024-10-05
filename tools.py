@@ -15,3 +15,9 @@ def do_something(text: str = "hidden_default", number: int = 4):
 def just_return(*args, **kwargs):
     logger.debug("just returning from func")
     return "returning"
+
+
+def test_generator(text: str = "hidden_default", number: int = 1):
+    for i in range(number):
+        sleep(5)
+        yield f"\n{text} ; {i}\n"

@@ -2,7 +2,7 @@ from bottle import get, post, request, route, run, static_file, view
 from loguru import logger
 from os import path
 from time import sleep
-from tools import do_something, just_return
+from tools import do_something, just_return, test_generator
 # from gevent import monkey
 
 # monkey.patch_all()
@@ -37,13 +37,16 @@ def process(
 ):
     logger.debug(f"{request.forms}")
     logger.debug(f"post {name = }; {input_field = }; {number_of_times = }")
-    result = do_something(
+    """ result = do_something(
         text=(name + ": " + request.forms["input_field"]),
         number=int(request.forms["number_of_times"]),
-    )
-
+    ) """
+    for line in test_generator(
+        text=request.forms["input_field"], number=int(request.forms["number_of_times"])
+    ):
+        yield line
     # result = just_return(input, number_of_times)
-    return result
+    # return result
 
 
 @route("/hello/<name>/running")
