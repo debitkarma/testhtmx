@@ -1,9 +1,10 @@
 from bottle import route, run, static_file, view
 from os import path
+from time import sleep
 from tools import do_something
-from gevent import monkey
+# from gevent import monkey
 
-monkey.patch_all()
+# monkey.patch_all()
 
 ROOT = path.abspath(path.dirname(__file__))
 
