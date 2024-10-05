@@ -14,7 +14,7 @@
 </head>
 
 <body>
-  <script src="/static/js/htmx.js"></script>
+  <!-- <script src="/static/js/htmx.js"></script> -->
   <div class="header">
     <h1>Test Page for HTMX</h1>
   </div>
@@ -23,13 +23,13 @@
     <p>Welcome <a href="/hello/{{name}}">{{name}}!!</a></p>
   </div>
   <div class="rendered-form">
-    <form hx-post="/hello/{{name}}/running">
+    <form>
       <div class="formbuilder-text form-group field-input">
         <label for="input" class="formbuilder-text-label">Text
           <br>
         </label>
-        <input type="text" placeholder="write something here" class="form-control" name="input" access="false"
-          value="default_text_form" maxlength="20" id="input">
+        <input type="text" placeholder="write something here" class="form-control" name="input_field" access="false"
+          value="default_text_form" maxlength="20" id="input_field">
       </div>
       <div class="formbuilder-number form-group field-number_of_times">
         <label for="number_of_times" class="formbuilder-number-label">Number</label>
@@ -37,7 +37,7 @@
           step="1" id="number_of_times">
       </div>
       <div class="formbuilder-button form-group field-submit">
-        <button type="submit" class="btn-default btn" name="submit" access="false" id="submit">Submit</button>
+        <button type="submit" class="btn-default btn" name="submit" access="false" id="submit" hx-post="/hello/{{name}}" hx-target="#results">Submit</button>
       </div>
     </form>
   </div>
