@@ -46,4 +46,4 @@ def stream():
     yield "END"
 
 
-run(host="localhost", port=8080, debug=True, server="gevent")
+run(host="localhost", port=8080, debug=True)  # server="gevent" <- for asgi
