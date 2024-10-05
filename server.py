@@ -51,14 +51,19 @@ def process(
 
 @route("/hello/<name>/running")
 def running(input, number_of_times):
-    # result = do_something(text=input, number=number_of_times)
-    result = just_return(input, number_of_times)
+    result = do_something(text=input, number=number_of_times)
+    # result = just_return(input, number_of_times)
     return result
 
 
-@route("/test")
-def test():
+@get("/readme")
+def readme():
     return static_file("README.md", root="./")
+
+
+@get("/test")
+def test():
+    return just_return()
 
 
 @route("/stream")
