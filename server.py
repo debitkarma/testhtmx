@@ -63,7 +63,8 @@ def readme():
 
 @get("/test")
 def test():
-    return just_return()
+    result = just_return()
+    return result
 
 
 @route("/stream")
