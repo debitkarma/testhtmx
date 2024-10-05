@@ -44,7 +44,7 @@ def process(
     for line in test_generator(
         text=request.forms["input_field"], number=int(request.forms["number_of_times"])
     ):
-        yield line
+        yield f'<div id="results" hx-trigger="every 1s" hx-target="this" hx-swap="outerHTML"><p>{line}</p></div>'
     # result = just_return(input, number_of_times)
     # return result
 

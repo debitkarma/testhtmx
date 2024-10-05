@@ -37,7 +37,8 @@
           step="1" id="number_of_times">
       </div>
       <div class="formbuilder-button form-group field-submit">
-        <button type="submit" class="btn-default btn" name="submit" access="false" id="submit" hx-post="/hello/{{name}}" hx-target="#results">Submit</button>
+        <button type="submit" class="btn-default btn" name="submit" access="false" id="submit" hx-post="/hello/{{name}}"
+          hx-target="#results">Submit</button>
       </div>
     </form>
   </div>
