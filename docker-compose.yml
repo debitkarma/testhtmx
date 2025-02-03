@@ -1,0 +1,30 @@
+# compose file to run the redis server, web services, and queue-task
+
+services:
+
+  redis:
+    image: redis:8.0-M03-alpine
+  
+  app:
+    build: .
+    image: web
+    container_name: web
+    ports:
+      - 8080:80
+    command: python server.py
+    volumes:
+      - .:/app
+    #environment:
+    #  - VAR=value
+    depends_on:
+      - redis
+
+  worker:
+    image: web
+    command: python worker.py
+    volumes:
+     - .:/app
+    #environment:
+    #  - VAR=value
+    depends_on:
+      - redis
