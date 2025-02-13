@@ -8,5 +8,7 @@ dependencies = [
     "bottle>=0.13.1",
     "gevent>=24.2.1",
     "loguru>=0.7.2",
+    "redis>=5.2.1",
+    "rq>=2.1.0",
     "tqdm>=4.66.5",
 ]

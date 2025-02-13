@@ -1,11 +1,15 @@
 from bottle import get, post, request, route, run, static_file, view
 from loguru import logger
 from os import path
+from rq import Queue
 from time import sleep
 from tools import do_something, just_return, test_generator
 
+import redis
 
 ROOT = path.abspath(path.dirname(__file__))
+r = redis.Redis(host="redis", port=6379)
+q = Queue(connection=r)
 
 
 @route("/static/<filepath>")
