@@ -19,12 +19,12 @@ services:
     depends_on:
       - redis
 
-  worker:
-    image: web
-    command: python worker.py
-    volumes:
-     - .:/app
-    #environment:
-    #  - VAR=value
-    depends_on:
-      - redis
+  # worker:
+  #   image: web
+  #   command: python worker.py
+  #   volumes:
+  #    - .:/app
+  #   #environment:
+  #   #  - VAR=value
+  #   depends_on:
+  #     - redis

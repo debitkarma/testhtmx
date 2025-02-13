@@ -1,8 +1,5 @@
 from loguru import logger
 from time import sleep
-# from gevent import monkey
-
-# monkey.patch_all()
 
 
 def do_something(text: str = "hidden_default", number: int = 4):

@@ -3,9 +3,7 @@ from loguru import logger
 from os import path
 from time import sleep
 from tools import do_something, just_return, test_generator
-# from gevent import monkey
 
-# monkey.patch_all()
 
 ROOT = path.abspath(path.dirname(__file__))
 
@@ -76,4 +74,4 @@ def stream():
     yield "END"
 
 
-run(host="localhost", port=8080, debug=True)  # server="gevent" <- for asgi
+run(host="localhost", port=8080, debug=True)
