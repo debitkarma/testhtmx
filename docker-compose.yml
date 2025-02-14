@@ -29,12 +29,12 @@ services:
         - action: rebuild
           path: requirements.txt
 
-  # worker:
-  #   image: web
-  #   command: python worker.py
-  #   volumes:
-  #    - .:/app
-  #   #environment:
-  #   #  - VAR=value
-  #   depends_on:
-  #     - redis
+  worker:
+    image: web
+    command: rq worker --url redis://redis:6379
+    # volumes:
+    #  - .:/app
+    #environment:
+    #  - VAR=value
+    depends_on:
+      - redis

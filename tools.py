@@ -16,5 +16,5 @@ def just_return(*args, **kwargs):
 
 def test_generator(text: str = "hidden_default", number: int = 1):
     for i in range(number):
-        sleep(5)
+        sleep(20)
         yield f"\n{text} ; {i}\n"
