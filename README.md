@@ -2,9 +2,23 @@
 
 This is a toy project to get to learn how HTMX works. Working with `bottle` as a web server, though I may eventually switch to flask/asgi to see how that could work after this is up and running.
 
-Also, I'm learning `uv` with this project. It's _fast_! Gotta get back on the Rust train eventually! 
+Also, I'm learning `uv` with this project. It's _fast_! Gotta get back on the Rust train eventually!
 
-## Resources
+# Development Notes
+
+## Working with Docker
+
+Look at the `Dockerfile` and `docker-compose.yml` files. Things are set so the container is built without an entrypoint. Instead, compose's develop option is set to sync any file changes in the current dir to the /app folder inside the container. It also watches for any changes to the `requirements.txt` file and rebuilds as needed.
+
+The relevant commands are:
+```
+docker compose build --no-cache
+docker compose up --watch
+```
+
+Bottle is set to run on `0.0.0.0` so that it can be accessed from outside the container.
+
+# Resources
 
 - [uv venv](https://docs.astral.sh/uv/pip/environments/#creating-a-virtual-environment)
 

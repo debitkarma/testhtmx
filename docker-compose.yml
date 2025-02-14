@@ -21,6 +21,13 @@ services:
     #  - VAR=value
     depends_on:
       - redis
+    develop:
+      watch:
+        - action: sync
+          path: .
+          target: /app
+        - action: rebuild
+          path: requirements.txt
 
   # worker:
   #   image: web

@@ -14,4 +14,5 @@ RUN pip install --no-cache-dir --upgrade -r /app/requirements.txt
 
 # copy project files
 COPY . /app
-
+# only for deployment container
+#COMMAND = []
