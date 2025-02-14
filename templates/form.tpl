@@ -45,19 +45,11 @@
   <div id="results">
     <p></p>
   </div>
-  <div id="testing html">
+  <div id="jobs">
     <p>
-      <a href="/running">./running</a>
+      Running jobs: <br />
     </p>
-    <p>
-      <a href="/running">/running</a>
-    </p>
-    <p>
-      <a href="running">running</a>
-    </p>
-    <p>
-      <a href="{{name}}/running">{{name}}/running</a>
-    </p>
+    {{jobs}}
   </div>
 </body>
 

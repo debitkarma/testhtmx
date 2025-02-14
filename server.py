@@ -28,7 +28,12 @@ def serve_htmx():
 @view("templates/form")
 def hello(name="Default Name"):
     logger.debug(f"get hello {name}")
-    return dict(name=name)
+    jobs = ""
+    for job in q.jobs:
+        link = f'<a href="/hello/{name}/job/{job.id}">Status: {job._status}</a>'
+        jobs += f"<p>ID: {job.id}<br />Queued at: {job.enqueued_at}<br />{link}</p>"
+
+    return dict(name=name, jobs=jobs)
 
 
 @post("/hello")
@@ -37,18 +42,33 @@ def hello(name="Default Name"):
 def process(
     name="Default Name Override", input_field="text_form_override", number_of_times=1
 ):
-    logger.debug(f"{request.forms}")
+    # logger.debug(f"{request.forms}")
     logger.debug(f"post {name = }; {input_field = }; {number_of_times = }")
     """ result = do_something(
         text=(name + ": " + request.forms["input_field"]),
         number=int(request.forms["number_of_times"]),
     ) """
-    for line in test_generator(
-        text=request.forms["input_field"], number=int(request.forms["number_of_times"])
-    ):
-        yield f'<div id="results" hx-trigger="every 1s" hx-target="this" hx-swap="outerHTML"><p>{line}</p></div>'
-    # result = just_return(input, number_of_times)
-    # return result
+    # for line in test_generator(
+    #     text=request.forms["input_field"], number=int(request.forms["number_of_times"])
+    # ):
+    #     yield f'<div id="results" hx-trigger="every 1s" hx-target="this" hx-swap="outerHTML"><p>{line}</p></div>'
+    for _ in request.forms["number_of_times"]:
+        task = q.enqueue(
+            test_generator, text=f"{request.forms["input_field"]}", number=10
+        )
+
+    for job in q.jobs:
+        link = f'<a href="/hello/{name}/job/{job.id}">{job._status}</a>'
+        yield f'<div id="results" hx-trigger="every 1s" hx-target="this" hx-swap="outerHTML"><p>{job.id} - {link}</p></div>'
+
+
+@route("/hello/<name>/job/<job_id>")
+def job(name, job_id):
+    job = q.fetch_job(job_id)
+    if not job.return_value:
+        return f"<center><br /><br /><h3>The job is still pending</h3><br /><br />ID:{job_id}<br />Queued at: {job.enqueued_at}<br />Status: {job._status}</center>"
+    else:
+        return f'<center><br /><br /><img src="{job.result}" height="200px"><br /><br />ID:{job_id}<br />Queued at: {job.enqueued_at}<br />Finished at: {job.ended_at}</center>'
 
 
 @route("/hello/<name>/running")
