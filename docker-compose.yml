@@ -15,8 +15,8 @@ services:
     ports:
       - 8080:8080
     command: python server.py
-    volumes:
-      - .:/app
+    #volumes:
+    #  - .:/app
     #environment:
     #  - VAR=value
     depends_on:
