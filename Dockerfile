@@ -13,6 +13,6 @@ ADD ./requirements.txt /app/requirements.txt
 RUN pip install --no-cache-dir --upgrade -r /app/requirements.txt
 
 # copy project files
-COPY . /app
+#COPY . /app
 # only for deployment container
 #COMMAND = []
