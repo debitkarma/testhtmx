@@ -8,6 +8,14 @@ services:
       - 6379:6379
     image: redis:8.0-M03-alpine
   
+  rqdash:
+    container_name: rqdash
+    image: cjlapao/rq-dashboard:latest
+    ports:
+      - 9181:9181
+    environment:
+      RQ_DASHBOARD_REDIS_URL: redis://redis:6379
+  
   app:
     build: .
     image: web
@@ -15,8 +23,8 @@ services:
     ports:
       - 8080:8080
     command: python server.py
-    #volumes:
-    #  - .:/app
+    volumes:
+      - .:/app
     #environment:
     #  - VAR=value
     depends_on:
@@ -31,9 +39,10 @@ services:
 
   worker:
     image: web
-    command: rq worker --url redis://redis:6379
-    # volumes:
-    #  - .:/app
+    container_name: worker
+    command: rq worker --url redis://redis:6379 high default low
+    volumes:
+      - .:/app
     #environment:
     #  - VAR=value
     depends_on:
