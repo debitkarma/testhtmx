@@ -6,6 +6,16 @@ Also, I'm learning `uv` with this project. It's _fast_! Gotta get back on the Ru
 
 # Development Notes
 
+The `rq` queues are working. The form submission sends data back to bottle for processing, and then the relevant functions enqueue jobs. Jobs get processed. You can see this with a `docker logs -f worker` to watch the worker container output debug stuff.
+
+Added rq-dashboard, so you can go to `http://localhost:9181` to view the queues and such live, with updates, results, etc.
+
+Default ttl is 500sec for all results. I'll probably want to change that to a day or two.
+I can specify job ids as strings, so I can name them accordingly.
+I can view failed and finished jobs' results, so I need a page that does that correctly.
+I need to change the template to create line items for all the jobs i pass in on initial page load.
+HTMX is pretty barebones here. I'll probably want to create and identify divs (using _gasp_ CSS!!) to show queued jobs, started jobs, and finished and failed results. Keeping it live loading and such is a good way to learn htmx.
+
 ## Working with Docker
 
 Look at the `Dockerfile` and `docker-compose.yml` files. Things are set so the container is built without an entrypoint. Instead, compose's develop option is set to sync any file changes in the current dir to the /app folder inside the container. It also watches for any changes to the `requirements.txt` file and rebuilds as needed.
