@@ -45,7 +45,7 @@
   <div id="results">
     <p></p>
   </div>
-  <div id="jobs">
+  <div id="jobs" hx-get="/{{name}}/jobs" hx-trigger="every 3s" hx-select="#jobs" hx-swap="outerHTML">
     <p>
       Running jobs: <br />
     </p>
