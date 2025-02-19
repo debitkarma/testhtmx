@@ -17,6 +17,7 @@ def just_return(*args, **kwargs):
 def test_generator(text: str = "hidden_default", number: int = 1):
     logger.debug(f"entered test_gen; {text=}, {number=}")
     for i in range(number):
-        sleep(20)
-        logger.debug("slept 20")
-        yield f"\n{text} ; {i}\n"
+        sleep(10)
+        logger.debug("slept 10")
+        # yield f"\n{text} ; {i}\n"
+    return "job complete!"
