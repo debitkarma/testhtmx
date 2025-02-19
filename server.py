@@ -1,4 +1,4 @@
-from bottle import get, post, request, route, run, static_file, view
+from bottle import get, post, request, route, run, static_file, template, view
 from loguru import logger
 from os import path
 from rq import Queue
@@ -107,15 +107,40 @@ def running(input, number_of_times):
     return result
 
 
-@get("/readme")
-def readme():
-    return static_file("README.md", root="./")
+@get("/new")
+@view("templates/template")
+def new():
+    pass
 
 
-@get("/test")
-def test():
-    result = just_return()
-    return result
+@post("/submit")
+def submit():
+    job_data = request.forms.get("job_data")
+    logger.debug(f"job submitted: {job_data = }")
+    job = q.enqueue(
+        test_generator, kwargs={"text": job_data, "number": 20}, job_timeout=600
+    )
+    return f"Job submitted with ID: {job.id}"
+
+
+@route("/queued")
+def queued():
+    jobs = q.jobs
+    return template(
+        "templates/queued_item.tpl",
+        jobs=jobs,
+    )
+
+
+@route("/completed")
+def completed():
+    registry = q.finished_job_registry
+    job_ids = registry.get_job_ids()
+    completed_jobs = [q.fetch_job(job_id) for job_id in job_ids]
+    return template(
+        "templates/completed_item.tpl",
+        jobs=completed_jobs,
+    )
 
 
 @route("/stream")
