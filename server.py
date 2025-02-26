@@ -116,11 +116,23 @@ def new():
 @post("/submit")
 def submit():
     job_data = request.forms.get("job_data")
-    logger.debug(f"job submitted: {job_data = }")
-    job = q.enqueue(
-        test_generator, kwargs={"text": job_data, "number": 20}, job_timeout=600
-    )
-    return f"Job submitted with ID: {job.id}"
+    submissions = job_data.split()
+    if len(submissions) == 1:
+        logger.debug(f"job submitted: {job_data = }")
+        job = q.enqueue(
+            test_generator, kwargs={"text": job_data, "number": 10}, job_timeout=600
+        )
+        return f"Job submitted with ID: {job.id}"
+    elif len(submissions) > 1:
+        logger.debug(f"multiple jobs submitted, split request data: {submissions = }")
+        for submission in submissions:
+            logger.debug(f"queuing {submission = }")
+            job = q.enqueue(
+                test_generator,
+                kwargs={"text": submission, "number": 5},
+                job_timeout=600,
+            )
+            yield template("templates/submitted_item.tpl", id=job.id)
 
 
 @route("/queued")
